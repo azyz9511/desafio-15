@@ -1,0 +1,59 @@
+-ejecutar servidor en modo FORK
+node server.js
+
+-ejecutar servidor en modo CLUSTER
+node server.js --modo="CLUSTER"
+
+-ejecutar servidor con nodemon en modo FORK
+nodemon server.js
+
+-ejecutar servidor con nodemon en modo CLUSTER
+nodemon server.js --modo="CLUSTER"
+
+-ejecutar servidor con forever en modo FORK
+forever start server.js
+
+-ejecutar servidor con forever en modo CLUSTER
+forever start server.js --modo="CLUSTER"
+ 
+-listar procesos activos con forever
+forever list
+
+-listar procesos activos en windows por CMD
+tasklist /fi "imagename eq node.exe"
+
+-ejecutar el servidor con pm2 en modo FORK
+pm2 start server.js --name="serverFork" --watch
+
+-ejecutar el servidor con pm2 en modo CLUSTER
+pm2 start server.js --name="serverCluster" --watch -i max
+
+-listar procesos activos con pm2
+pm2 list
+
+-listar procesos activos en windows por CMD
+tasklist /fi "imagename eq node.exe"
+
+-finalizar un proceso en especifico por CMD
+taskkill /pid (numero de proceso) /f 
+
+-finalizar todos los procesos desde forever
+forever stopall
+
+-detener todos los procesos de pm2
+pm2 stop all
+
+-eliminar todos los procesos de pm2
+pm2 delete all
+
+-ejecutar el servidor en modo CLUSTER para probar nginx con la ruta /api/randoms en el puerto 8081
+node server.js --puerto=8081 --modo="CLUSTER"
+
+-ejecutar el servidor en modo FORK para probar nginx con la ruta /info en el puerto 8080
+node server.js --puerto=8080
+
+-ejecutar el servidor en fodo FORK mediante pm2 para que el servidor de ngnix los gestione como cluster en 4 puertos diferentes
+pm2 start server.js --name="server8083" --watch -- 8082
+pm2 start server.js --name="server8083" --watch -- 8083
+pm2 start server.js --name="server8083" --watch -- 8084
+pm2 start server.js --name="server8083" --watch -- 8085

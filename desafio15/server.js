@@ -65,24 +65,20 @@ io.on('connection',async (socket) => {
     }
 });
 
-if(args.modo === 'CLUSTER'){
-    if(cluster.isPrimary){
-        console.log(`Master ${process.pid} is running`);
-        for (let i = 0; i < cpus; i++) {
-            cluster.fork();        
-        }
-        cluster.on('exit',(worker, code, signal) => {
-            console.log(`worker ${worker.process.pid} died`);
-            cluster.fork();
-        });
-    }else{
-        httpserver.listen(args.puerto, () => {
-            console.log(`proceso ${process.pid} corriendo en el puerto ${args.puerto}`);
-        });   
-        console.log(`worker ${process.pid} is running`);
+//inicio de servidor
+
+if(args.modo === 'CLUSTER' && cluster.isPrimary){
+    console.log(`Master ${process.pid} is running`);
+    for (let i = 0; i < cpus; i++) {
+        cluster.fork();        
     }
-}else if(args.modo === 'FORK' || !args.modo){
+    cluster.on('exit',(worker, code, signal) => {
+        console.log(`worker ${worker.process.pid} died`);
+        cluster.fork();
+    });
+}else{
     httpserver.listen(args.puerto, () => {
         console.log(`proceso ${process.pid} corriendo en el puerto ${args.puerto}`);
     });   
+    console.log(`worker ${process.pid} is running`);
 }
